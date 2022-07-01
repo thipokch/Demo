@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform")
+    id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
 }
 
@@ -17,13 +17,24 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
-        val commonTest by getting {
+        val commonMain by getting {
             dependencies {
-                implementation(kotlin("test"))
+                implementation("co.touchlab:kermit:1.1.3")
+                implementation("co.touchlab:kermit-koin:1.1.3")
+                implementation("io.insert-koin:koin-core:3.2.0")
             }
         }
-        val androidMain by getting
+        val commonTest by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-test:1.7.0")
+                implementation("io.insert-koin:koin-test:3.2.0")
+            }
+        }
+        val androidMain by getting {
+            dependencies {
+                implementation("co.touchlab:kermit-crashlytics:1.1.3")
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -33,6 +44,9 @@ kotlin {
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
+            dependencies {
+                implementation("co.touchlab:kermit-crashlytics:1.1.3")
+            }
         }
         val iosX64Test by getting
         val iosArm64Test by getting
